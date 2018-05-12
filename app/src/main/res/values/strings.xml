@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BluetoothTest</string>
+    <string name="text_bt_not_supported">Bluetooth isn\'t supported on your device</string>
+    <string name="text_bt_turning_on">Bluetooth is turning on</string>
+    <string name="text_bt_ready">Bluetooth is ready</string>
+    <string name="text_bt_isnt_accessible">Bluetooth isn\'t accessible!</string>
+    <string name="text_bt_already_on">Bluetooth is already ON</string>
+    <string name="text_bt_already_off">Bluetooth is already OFF</string>
 </resources>
