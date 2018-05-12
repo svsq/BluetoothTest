@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvBTstate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvBTstate"
-        android:gravity="center"
         android:layout_marginBottom="50dp"
+        android:gravity="center"
         android:text="BT State"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btnCheck"
@@ -24,5 +24,22 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="CHECK" />
+
+    <Button
+        android:id="@+id/btnTurnOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="14dp"
+        android:text="Turn on" />
+
+    <Button
+        android:id="@+id/btnTurnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="14dp"
+        android:text="Turn off" />
+
 
 </LinearLayout>
