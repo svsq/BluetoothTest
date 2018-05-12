@@ -1,7 +1,10 @@
 package tk.svsq.bluetoothtest;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,14 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (bluetoothAdapter.isEnabled()) {
             Toast.makeText(this, R.string.text_bt_already_on, Toast.LENGTH_SHORT).show();
         } else {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(enableBtIntent);
+            /*Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(enableBtIntent);*/
+            bluetoothState();
         }
     }
 
     public void turnOffBluetooth() {
 
-        if(!bluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isEnabled()) {
             Toast.makeText(this, R.string.text_bt_already_off, Toast.LENGTH_SHORT).show();
         } else {
             bluetoothAdapter.disable();
@@ -70,6 +74,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 labelStateBluetooth.setText(R.string.text_bt_isnt_accessible);
             }
+        }
+    }
+
+    public void bluetoothState() {
+
+        BroadcastReceiver bluetoothState = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String prevStateExtra = BluetoothAdapter.EXTRA_PREVIOUS_STATE;
+                String stateExtra = BluetoothAdapter.EXTRA_STATE;
+                int state = intent.getIntExtra(stateExtra, -1);
+                int previousState = intent.getIntExtra(prevStateExtra, -1);
+
+                switch (state) {
+
+                    case (BluetoothAdapter.STATE_TURNING_ON):
+                        toastText = "Bluetooth turning ON";
+                        break;
+
+                    case (BluetoothAdapter.STATE_ON):
+                        toastText = "Bluetooth ON";
+                        unregisterReceiver(this);
+                        break;
+
+                    case (BluetoothAdapter.STATE_TURNING_OFF):
+                        toastText = "Bluetooth turning OFF";
+                        break;
+
+                    default:
+                        break;
+                }
+                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        if(!bluetoothAdapter.isEnabled()) {
+            String actionStateChanged = BluetoothAdapter.ACTION_STATE_CHANGED;
+            String actionRequestEnable = BluetoothAdapter.ACTION_REQUEST_ENABLE;
+
+            registerReceiver(bluetoothState, new IntentFilter(actionStateChanged));
+            startActivityForResult(new Intent(actionRequestEnable), 0);
         }
     }
 
